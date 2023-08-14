@@ -80,11 +80,11 @@ class ViewController: UIViewController, MTKViewDelegate {
         computeEncoder.setTexture(texture, index: 0)
         computeEncoder.setTexture(drawable.texture, index: 1)
 
+        let threadsPerGrid = MTLSize(width: texture.width, height: texture.height, depth: 1)
         let w = computePipeline.threadExecutionWidth
         let h = computePipeline.maxTotalThreadsPerThreadgroup / w
-        let threadgroupSize = MTLSizeMake(w, h, 1)
+        let threadgroupSize = MTLSize(width: w, height: h, depth: 1)
 
-        let threadsPerGrid = MTLSize(width: texture.width, height: texture.height, depth: 1)
         computeEncoder.dispatchThreads(threadsPerGrid,
                                        threadsPerThreadgroup: threadgroupSize)
 
